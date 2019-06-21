@@ -27,7 +27,7 @@ Some application servers (e.g. Ruby's Unicorn) halt progress when dealing with n
 
 ## Features
 
-* Unified NXNG/App Server logs.
+* Unified NGINX/App Server logs.
 * [L2met](https://github.com/ryandotsmith/l2met) friendly NGINX log format.
 * [Heroku request ids](https://devcenter.heroku.com/articles/http-request-id) embedded in NGINX logs.
 * Crashes dyno if NGINX or App server crashes. Safety first.
