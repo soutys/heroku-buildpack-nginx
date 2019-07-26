@@ -43,14 +43,19 @@ echo "Downloading $zlib_url"
 echo "Downloading $uuid4_url"
 (cd nginx-${NGINX_VERSION} && curl -L $uuid4_url | tar xvz )
 
-echo "Downloading $brotli_url"
-(
-  cd nginx-${NGINX_VERSION}
-  git clone --branch v${BROTLI_VERSION} ${brotli_url} ngx_brotli-${BROTLI_VERSION}
-  cd ngx_brotli-${BROTLI_VERSION}
-  git submodule update --init
-  cd ..
-)
+BROTLI_MOD=""
+if [[ "${STACK}" == "heroku-18" ]]
+then
+  echo "Downloading $brotli_url"
+  (
+    cd nginx-${NGINX_VERSION}
+    git clone --branch v${BROTLI_VERSION} ${brotli_url} ngx_brotli-${BROTLI_VERSION}
+    cd ngx_brotli-${BROTLI_VERSION}
+    git submodule update --init
+    cd ..
+  )
+  BROTLI_MOD="--add-module=${temp_dir}/nginx-${NGINX_VERSION}/ngx_brotli-${BROTLI_VERSION}"
+fi
 
 (
   cd nginx-${NGINX_VERSION}
@@ -63,7 +68,7 @@ echo "Downloading $brotli_url"
     --prefix=/tmp/nginx \
     --add-module=${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
     --add-module=${temp_dir}/nginx-${NGINX_VERSION}/nginx-uuid4-module-${UUID4_VERSION} \
-    --add-module=${temp_dir}/nginx-${NGINX_VERSION}/ngx_brotli-${BROTLI_VERSION}
+    ${BROTLI_MOD}
   make install
 )
 
