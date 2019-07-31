@@ -7,10 +7,10 @@ cp bin/nginx-${STACK} bin/nginx
 
 mkdir -p logs/nginx
 
-for conf in "config/nginx.conf" "config/nginx-solo-sample.conf" ;
+for conf in "config/nginx.conf" "config/nginx-solo-sample.conf"
 do
   erb ${conf}.erb > ${conf}
-  if [[ "${STACK}" == "heroku-18" ]];
+  if [[ "${STACK}" == "heroku-18" ]]
   then
     sed --in-place 's/#brotli/brotli/' ${conf}
   fi

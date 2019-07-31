@@ -113,6 +113,7 @@ $ make build # It outputs the latest builds to bin/cedar-*
 To test the builds:
 
 ```
+$ make test
 $ make shell  # use shell-18 for brotli support
 $ cp bin/nginx-$STACK bin/nginx
 $ FORCE=1 bin/start-nginx
